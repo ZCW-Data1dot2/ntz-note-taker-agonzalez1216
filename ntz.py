@@ -28,22 +28,28 @@ def clear():
 def retrieve_all():
   sql = "SELECT * FROM NTZ_NOTES"
   c.execute(sql)
-  rows = cur.fetchall()
+  rows = c.fetchall()
   for row in rows:
     print(row)
 def edit(note_name, note_data):
   select_sql = "SELECT * FROM NTZ_NOTES WHERE NOTE_NAME =?"
-  c.execute(sql, note_name)
+  c.execute(select_sql, note_name)
   result = c.fetchone()
   new_edit = input()
   note_data = result[1] + str(new_edit)
   update_sql = "UPDATE NTZ_NOTES SET NOTE_CONTENT = ? WHERE NOTE_NAME =?"
-  c.execute(sql,(note_name, note_data))
+  c.execute(update_sql,(note_name, note_data))
 def cli():
-  pass
+  command = input('Input command, r, c, f, e or x for clear:\n')
+  if command == 'r':
+    note_name = input('New note name\n')
+    note_content = input('add note\n')
+    new_note_data = (note_name, note_content)
+    remember(new_note_data)
+
   
-def get_args():
-   return sys.argv
+# def get_args():
+#    return sys.argv
   
 # run the main function
 cli()
