@@ -1,6 +1,7 @@
 # add your code in this file
 import os
 import sqlite3
+from sys import argv
 
 conn = sqlite3.connect('notes.db')
 c = conn.cursor()
@@ -35,21 +36,24 @@ def edit(note_name, note_data):
   select_sql = "SELECT * FROM NTZ_NOTES WHERE NOTE_NAME =?"
   c.execute(select_sql, note_name)
   result = c.fetchone()
-  new_edit = input()
-  note_data = result[1] + str(new_edit)
+  note_data = result[1] + " " + note_data
   update_sql = "UPDATE NTZ_NOTES SET NOTE_CONTENT = ? WHERE NOTE_NAME =?"
   c.execute(update_sql,(note_name, note_data))
 def cli():
-  command = input('Input command, r, c, f, e or x for clear:\n')
-  if command == 'r':
-    note_name = input('New note name\n')
-    note_content = input('add note\n')
-    new_note_data = (note_name, note_content)
+#command = input('Input command, r, c, f, e or x for clear:\n')
+  if argv[1] == 'r':
+    new_note_data = (argv[2], argv[3])
     remember(new_note_data)
-
-  
-# def get_args():
-#    return sys.argv
+  elif argv[1] == 'e';
+    edit(argv[2], argv[3])
+  elif argv[1] == 'f';
+    forget(argv[2])
+  elif argv[1] == 'clear';
+    clear()
+  elif argv[1] == 'ntz'
+    retrieve_all()
+def get_args():
+   return argv
   
 # run the main function
-cli()
+cli(get_args())
